@@ -49,19 +49,26 @@ ALL_CCFLAGS += --use_fast_math
 ALL_CCFLAGS += --ptxas-options=-v,-warn-lmem-usage,--warn-on-spills
 ################################################################################
 # Target rules
-all: test_mm  test_decompress
+all: test_mm  test_decompress test_multi_variant
 
-test_mm.o:  test_mm.cu utils.h 
+test_mm.o:  test_mm.cu utils.h
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-test_mm: test_mm.o 
+test_mm: test_mm.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
 
-test_decompress.o:  test_decompress.cu utils.h 
+test_decompress.o:  test_decompress.cu utils.h
 	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
 
-test_decompress: test_decompress.o 
+test_decompress: test_decompress.o
 	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+ $(LIBRARIES)
+
+# Phase 0: multi-variant GEMV benchmark — standalone, no libL_API dependency
+test_multi_variant.o: test_multi_variant.cu
+	$(EXEC) $(NVCC) $(INCLUDES) $(ALL_CCFLAGS) $(GENCODE_FLAGS) -o $@ -c $<
+
+test_multi_variant: test_multi_variant.o
+	$(EXEC) $(NVCC) $(ALL_LDFLAGS) $(GENCODE_FLAGS) -o $@ $+
 
 clean:
-	rm -f test_mm test_mm.o test_decompress test_decompress.o
+	rm -f test_mm test_mm.o test_decompress test_decompress.o test_multi_variant test_multi_variant.o
