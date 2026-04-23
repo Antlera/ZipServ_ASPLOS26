@@ -59,6 +59,8 @@ cd ../kernel_benchmark && source test_env && make
 
 ### Run Benchmarks
 
+Single-shape sanity check:
+
 ```bash
 # Matrix multiplication benchmark
 cd kernel_benchmark
@@ -66,6 +68,19 @@ cd kernel_benchmark
 
 # Example: ./test_mm 4096 4096 128 1
 ```
+
+One-click benchmark + interactive HTML report (covers all canonical LLaMA /
+Mistral GEMM shapes, auto-detects GPU, writes
+`kernel_benchmark/reports/report_<gpu>.html`):
+
+```bash
+cd kernel_benchmark
+./run_benchmark.sh
+```
+
+For full agent-followable instructions (prereq checks, flags, troubleshooting,
+how to add new GPUs/workloads), see
+[`kernel_benchmark/AGENTS.md`](kernel_benchmark/AGENTS.md).
 
 ## Citation
 

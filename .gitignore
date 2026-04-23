@@ -1,0 +1,28 @@
+# Build artifacts
+*.o
+*.so
+build/L_API.o
+build/libL_API.so
+
+# Compiled benchmark binaries
+kernel_benchmark/test_mm
+kernel_benchmark/test_decompress
+
+# Generated reports (per-machine output of run_benchmark.sh)
+kernel_benchmark/reports/
+
+# Profiler / scratch logs
+kernel_benchmark/nvprof_*.log
+
+# Archived CSV backups created when re-running run_benchmark.sh
+kernel_benchmark/bf16_triplebm_res.csv.*.bak
+
+# Large reference docs / papers
+*.pdf
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+__pycache__/
+*.pyc
